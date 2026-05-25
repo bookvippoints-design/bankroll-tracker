@@ -4,218 +4,399 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Control Bankroll 007 Picks</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --muted: #94a3b8;
-      --text: #f8fafc;
-      --accent: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --line: #334155;
-      --blue: #38bdf8;
+    :root{
+      --bg:#020617;
+      --card:#111827;
+      --line:#334155;
+      --text:#f8fafc;
+      --muted:#94a3b8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --yellow:#f59e0b;
+      --blue:#38bdf8;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #020617, #0f172a);
-      color: var(--text);
+
+    *{
+      box-sizing:border-box;
     }
-    header {
-      padding: 24px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(15, 23, 42, 0.92);
-      position: sticky;
-      top: 0;
-      z-index: 5;
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(135deg,#020617,#0f172a);
+      color:var(--text);
     }
-    h1 { margin: 0 0 6px; font-size: 24px; }
-    .sub { color: var(--muted); font-size: 14px; }
-    main { padding: 20px; max-width: 1300px; margin: auto; }
-    .grid { display: grid; gap: 16px; }
-    .cards { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
-    .card {
-      background: rgba(17, 24, 39, 0.94);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    header{
+      padding:24px;
+      border-bottom:1px solid var(--line);
+      background:#0f172a;
+      position:sticky;
+      top:0;
+      z-index:10;
     }
-    .metric { font-size: 26px; font-weight: bold; margin-top: 8px; }
-    .green { color: var(--accent); }
-    .red { color: var(--danger); }
-    .yellow { color: var(--warning); }
-    .blue { color: var(--blue); }
-    label { display:block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: #020617;
-      color: var(--text);
-      outline: none;
+
+    h1{
+      margin:0 0 6px;
+      font-size:26px;
     }
-    textarea { min-height: 70px; }
-    .form-grid {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+
+    .sub{
+      color:var(--muted);
+      font-size:14px;
     }
-    button {
-      border: none;
-      border-radius: 12px;
-      padding: 11px 16px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #052e16;
-      background: var(--accent);
+
+    main{
+      max-width:1300px;
+      margin:auto;
+      padding:20px;
     }
-    button.secondary { background: #38bdf8; color: #082f49; }
-    button.danger { background: var(--danger); color: white; }
-    button.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
-    .tabs { display:flex; gap: 8px; flex-wrap:wrap; margin-bottom: 16px; }
-    .tabs button { background:#1e293b; color:var(--text); }
-    .tabs button.active { background:var(--accent); color:#052e16; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 980px;
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:16px;
     }
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      font-size: 13px;
-      vertical-align: top;
+
+    .card{
+      background:rgba(17,24,39,.95);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
     }
-    th { color: #cbd5e1; background: #0f172a; position: sticky; top: 86px; }
-    .table-wrap { overflow-x:auto; }
-    .pill {
+
+    .metric{
+      font-size:28px;
+      font-weight:bold;
+      margin-top:8px;
+    }
+
+    .green{color:var(--green);}
+    .red{color:var(--red);}
+    .yellow{color:var(--yellow);}
+    .blue{color:var(--blue);}
+
+    .section{
+      margin-top:20px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#020617;
+      color:var(--text);
+    }
+
+    textarea{
+      min-height:80px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:12px;
+    }
+
+    button{
+      border:none;
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .btn-green{
+      background:var(--green);
+      color:#052e16;
+    }
+
+    .btn-blue{
+      background:var(--blue);
+      color:#082f49;
+    }
+
+    .btn-red{
+      background:var(--red);
+      color:white;
+    }
+
+    .btn-ghost{
+      background:transparent;
+      border:1px solid var(--line);
+      color:var(--text);
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .tabs button{
+      background:#1e293b;
+      color:white;
+    }
+
+    .tabs button.active{
+      background:var(--green);
+      color:#052e16;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      min-width:1000px;
+      border-collapse:collapse;
+    }
+
+    th,td{
+      padding:10px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:13px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#0f172a;
+      color:#cbd5e1;
+    }
+
+    .pill{
       display:inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: bold;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:bold;
     }
-    .pill.ganada { background: rgba(34,197,94,.15); color: var(--accent); }
-    .pill.perdida { background: rgba(239,68,68,.15); color: var(--danger); }
-    .pill.pendiente { background: rgba(245,158,11,.15); color: var(--warning); }
-    .pill.anulada { background: rgba(148,163,184,.15); color: var(--muted); }
-    .hidden { display:none; }
-    .hint { color: var(--muted); font-size: 12px; margin-top: 8px; line-height: 1.4; }
-    .row-actions { display:flex; gap:6px; }
-    .small { padding: 6px 9px; font-size: 12px; border-radius: 8px; }
+
+    .ganada{
+      background:rgba(34,197,94,.15);
+      color:var(--green);
+    }
+
+    .perdida{
+      background:rgba(239,68,68,.15);
+      color:var(--red);
+    }
+
+    .pendiente{
+      background:rgba(245,158,11,.15);
+      color:var(--yellow);
+    }
+
+    .anulada{
+      background:rgba(148,163,184,.15);
+      color:var(--muted);
+    }
+
+    .row-actions{
+      display:flex;
+      gap:6px;
+    }
+
+    .small{
+      padding:6px 8px;
+      border-radius:8px;
+      font-size:12px;
+    }
+
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Control Bankroll 007 Picks</h1>
-    <div class="sub">Bank inicial: $5 · Control de simples, sistemas y combinadas</div>
-  </header>
 
-  <main>
-    <section class="grid cards">
-      <div class="card"><div class="sub">Bank actual</div><div id="bankActual" class="metric green">$5.00</div></div>
-      <div class="card"><div class="sub">Ganancia / pérdida</div><div id="gananciaTotal" class="metric">$0.00</div></div>
-      <div class="card"><div class="sub">Total apostado</div><div id="totalApostado" class="metric blue">$0.00</div></div>
-      <div class="card"><div class="sub">ROI</div><div id="roi" class="metric">0%</div></div>
-      <div class="card"><div class="sub">Aciertos</div><div id="record" class="metric">0/0</div></div>
-    </section>
+<header>
+  <h1>Control Bankroll 007 Picks</h1>
+  <div class="sub">
+    Seguimiento de apuestas simples, sistemas y combinadas
+  </div>
+</header>
 
-    <section class="card" style="margin-top:16px;">
-      <div class="tabs">
-        <button class="active" data-tab="simple">Simple</button>
-        <button data-tab="sistema">Sistema</button>
-        <button data-tab="combinada">Combinada</button>
+<main>
+
+  <section class="cards">
+
+    <div class="card">
+      <div class="sub">Bank actual</div>
+      <div id="bankActual" class="metric green">$5.00</div>
+    </div>
+
+    <div class="card">
+      <div class="sub">Ganancia / Pérdida</div>
+      <div id="gananciaTotal" class="metric">$0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="sub">Total apostado</div>
+      <div id="totalApostado" class="metric blue">$0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="sub">ROI</div>
+      <div id="roi" class="metric">0%</div>
+    </div>
+
+    <div class="card">
+      <div class="sub">Record</div>
+      <div id="record" class="metric">0/0</div>
+    </div>
+
+  </section>
+
+  <section class="card section">
+
+    <div class="tabs">
+      <button class="active" data-tab="simple">Simple</button>
+      <button data-tab="sistema">Sistema</button>
+      <button data-tab="combinada">Combinada</button>
+    </div>
+
+    <form id="betForm">
+
+      <input type="hidden" id="editingId">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Fecha</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div>
+          <label>Tipo</label>
+          <select id="tipo">
+            <option value="simple">Simple</option>
+            <option value="sistema">Sistema</option>
+            <option value="combinada">Combinada</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Partido / Ticket</label>
+          <input id="partido" required>
+        </div>
+
+        <div>
+          <label>Pick</label>
+          <input id="pick" required>
+        </div>
+
+        <div>
+          <label>Cuota</label>
+          <input type="number" step="0.01" id="cuota">
+        </div>
+
+        <div>
+          <label>Stake</label>
+          <input type="number" step="0.01" id="stake" required>
+        </div>
+
+        <div>
+          <label>Resultado</label>
+          <select id="resultado">
+            <option value="pendiente">Pendiente</option>
+            <option value="ganada">Ganada</option>
+            <option value="perdida">Perdida</option>
+            <option value="anulada">Anulada</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Retorno real</label>
+          <input type="number" step="0.01" id="retorno">
+        </div>
+
       </div>
 
-      <form id="betForm">
-        <input type="hidden" id="editingId" />
-        <div class="form-grid">
-          <div>
-            <label>Fecha</label>
-            <input type="date" id="fecha" required />
-          </div>
-          <div>
-            <label>Tipo</label>
-            <select id="tipo">
-              <option value="simple">Simple</option>
-              <option value="sistema">Sistema</option>
-              <option value="combinada">Combinada</option>
-            </select>
-          </div>
-          <div>
-            <label>Partido / Ticket</label>
-            <input id="partido" placeholder="Ej: Tottenham - Everton" required />
-          </div>
-          <div>
-            <label>Pick</label>
-            <input id="pick" placeholder="Ej: 1 / Over 1.5 / Sistema 3/5" required />
-          </div>
-          <div>
-            <label>Cuota</label>
-            <input type="number" step="0.01" id="cuota" placeholder="1.80" />
-          </div>
-          <div>
-            <label>Stake</label>
-            <input type="number" step="0.01" id="stake" placeholder="0.50" required />
-          </div>
-          <div>
-            <label>Resultado</label>
-            <select id="resultado">
-              <option value="pendiente">Pendiente</option>
-              <option value="ganada">Ganada</option>
-              <option value="perdida">Perdida</option>
-              <option value="anulada">Anulada</option>
-            </select>
-          </div>
-          <div>
-            <label>Retorno real</label>
-            <input type="number" step="0.01" id="retorno" placeholder="Se puede dejar vacío" />
-          </div>
-        </div>
-        <div style="margin-top:12px;">
-          <label>Notas</label>
-          <textarea id="notas" placeholder="Captura recibida, comentario, fuente, etc."></textarea>
-        </div>
-        <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
-          <button type="submit">Guardar apuesta</button>
-          <button type="button" class="ghost" id="clearForm">Limpiar</button>
-        </div>
-        <div class="hint">
-          Para simples y combinadas, si el retorno está vacío y el resultado es “ganada”, se calcula stake × cuota. Para sistemas conviene poner el retorno real que arroja Betano.
-        </div>
-      </form>
-    </section>
+      <div style="margin-top:12px;">
+        <label>Notas</label>
+        <textarea id="notas"></textarea>
+      </div>
 
-    <section class="card" style="margin-top:16px;">
-      <h2 style="margin-top:0;">Historial</h2>
-      <div class="tabs">
-        <button class="active filter" data-filter="todos">Todos</button>
-        <button class="filter" data-filter="simple">Simples</button>
-        <button class="filter" data-filter="sistema">Sistemas</button>
-        <button class="filter" data-filter="combinada">Combinadas</button>
+      <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="submit" class="btn-green">Guardar apuesta</button>
+        <button type="button" id="clearForm" class="btn-ghost">Limpiar</button>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha</th><th>Tipo</th><th>Partido/Ticket</th><th>Pick</th><th>Cuota</th><th>Stake</th><th>Resultado</th><th>Retorno</th><th>G/P</th><th>Notas</th><th>Acción</th>
-            </tr>
-          </thead>
-          <tbody id="betsTable"></tbody>
-        </table>
+
+      <div class="hint">
+        Si no colocas retorno real, el sistema calcula automáticamente stake × cuota cuando la apuesta sea ganada.
       </div>
-    </section>
-  </main>
+
+    </form>
+
+  </section>
+
+  <section class="card section">
+
+    <h2>Historial</h2>
+
+    <div class="tabs">
+      <button class="active filter" data-filter="todos">Todos</button>
+      <button class="filter" data-filter="simple">Simples</button>
+      <button class="filter" data-filter="sistema">Sistemas</button>
+      <button class="filter" data-filter="combinada">Combinadas</button>
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Partido</th>
+            <th>Pick</th>
+            <th>Cuota</th>
+            <th>Stake</th>
+            <th>Resultado</th>
+            <th>Retorno</th>
+            <th>G/P</th>
+            <th>Notas</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="betsTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
 
 <script>
+
 const SUPABASE_URL = "https://xfkczgfirypokxryatqb.supabase.co";
+
 const SUPABASE_ANON_KEY = "sb_publishable_5-V3z5sonL_jugYOzpxl6A_HLcoUtTZ";
+
 const BANK_INICIAL = 5;
 
 let supabaseClient = null;
@@ -223,173 +404,377 @@ let bets = [];
 let activeFilter = "todos";
 
 function initSupabase() {
-  if (SUPABASE_URL.includes("PEGA_AQUI") || SUPABASE_ANON_KEY.includes("PEGA_AQUI")) {
-    alert("Falta configurar Supabase en index.html: SUPABASE_URL y SUPABASE_ANON_KEY.");
-    return false;
-  }
-  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
   return true;
 }
 
-function money(n) { return "$" + Number(n || 0).toFixed(2); }
+function money(n){
+  return "$" + Number(n || 0).toFixed(2);
+}
 
-function computeRetorno(bet) {
+function computeRetorno(bet){
+
   const stake = Number(bet.stake || 0);
   const cuota = Number(bet.cuota || 0);
-  if (bet.retorno !== null && bet.retorno !== undefined && bet.retorno !== "") return Number(bet.retorno);
-  if (bet.resultado === "ganada") return stake * cuota;
-  if (bet.resultado === "anulada") return stake;
+
+  if(
+    bet.retorno !== null &&
+    bet.retorno !== undefined &&
+    bet.retorno !== ""
+  ){
+    return Number(bet.retorno);
+  }
+
+  if(bet.resultado === "ganada"){
+    return stake * cuota;
+  }
+
+  if(bet.resultado === "anulada"){
+    return stake;
+  }
+
   return 0;
 }
 
-function profit(bet) {
+function profit(bet){
   return computeRetorno(bet) - Number(bet.stake || 0);
 }
 
-function updateSummary() {
-  let settled = bets.filter(b => b.resultado !== "pendiente");
-  let totalStake = bets.reduce((s,b)=>s+Number(b.stake||0),0);
-  let totalProfit = settled.reduce((s,b)=>s+profit(b),0);
-  let wins = bets.filter(b=>b.resultado==="ganada").length;
-  let losses = bets.filter(b=>b.resultado==="perdida").length;
-  let roi = totalStake ? (totalProfit / totalStake) * 100 : 0;
+function updateSummary(){
 
-  document.getElementById("bankActual").textContent = money(BANK_INICIAL + totalProfit);
-  document.getElementById("gananciaTotal").textContent = money(totalProfit);
-  document.getElementById("gananciaTotal").className = "metric " + (totalProfit >= 0 ? "green" : "red");
-  document.getElementById("totalApostado").textContent = money(totalStake);
-  document.getElementById("roi").textContent = roi.toFixed(1) + "%";
-  document.getElementById("roi").className = "metric " + (roi >= 0 ? "green" : "red");
-  document.getElementById("record").textContent = `${wins}/${wins+losses}`;
+  const settled = bets.filter(
+    b => b.resultado !== "pendiente"
+  );
+
+  const totalStake = bets.reduce(
+    (s,b)=>s+Number(b.stake||0),
+    0
+  );
+
+  const totalProfit = settled.reduce(
+    (s,b)=>s+profit(b),
+    0
+  );
+
+  const wins = bets.filter(
+    b=>b.resultado==="ganada"
+  ).length;
+
+  const losses = bets.filter(
+    b=>b.resultado==="perdida"
+  ).length;
+
+  const roi = totalStake
+    ? (totalProfit / totalStake) * 100
+    : 0;
+
+  document.getElementById("bankActual").textContent =
+    money(BANK_INICIAL + totalProfit);
+
+  document.getElementById("gananciaTotal").textContent =
+    money(totalProfit);
+
+  document.getElementById("gananciaTotal").className =
+    "metric " + (totalProfit >= 0 ? "green" : "red");
+
+  document.getElementById("totalApostado").textContent =
+    money(totalStake);
+
+  document.getElementById("roi").textContent =
+    roi.toFixed(1) + "%";
+
+  document.getElementById("roi").className =
+    "metric " + (roi >= 0 ? "green" : "red");
+
+  document.getElementById("record").textContent =
+    `${wins}/${wins + losses}`;
 }
 
-function renderTable() {
+function renderTable(){
+
   const tbody = document.getElementById("betsTable");
+
   tbody.innerHTML = "";
-  const filtered = activeFilter === "todos" ? bets : bets.filter(b => b.tipo === activeFilter);
+
+  const filtered =
+    activeFilter === "todos"
+      ? bets
+      : bets.filter(b => b.tipo === activeFilter);
+
+  if(!filtered.length){
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="11" style="text-align:center; padding:20px; color:#94a3b8;">
+          No hay apuestas registradas todavía.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
   filtered.forEach(b => {
-    const tr = document.createElement("tr");
+
     const p = profit(b);
+
+    const tr = document.createElement("tr");
+
     tr.innerHTML = `
       <td>${b.fecha || ""}</td>
-      <td>${b.tipo}</td>
+      <td>${b.tipo || ""}</td>
       <td>${b.partido || ""}</td>
       <td>${b.pick || ""}</td>
       <td>${b.cuota || ""}</td>
       <td>${money(b.stake)}</td>
-      <td><span class="pill ${b.resultado}">${b.resultado}</span></td>
+      <td>
+        <span class="pill ${b.resultado}">
+          ${b.resultado}
+        </span>
+      </td>
       <td>${money(computeRetorno(b))}</td>
-      <td class="${p >= 0 ? "green" : "red"}">${money(p)}</td>
+      <td class="${p >= 0 ? "green" : "red"}">
+        ${money(p)}
+      </td>
       <td>${b.notas || ""}</td>
       <td class="row-actions">
-        <button class="small secondary" onclick="editBet('${b.id}')">Editar</button>
-        <button class="small danger" onclick="deleteBet('${b.id}')">Borrar</button>
+        <button
+          type="button"
+          class="small btn-blue"
+          onclick="editBet('${b.id}')"
+        >
+          Editar
+        </button>
+
+        <button
+          type="button"
+          class="small btn-red"
+          onclick="deleteBet('${b.id}')"
+        >
+          Borrar
+        </button>
       </td>
     `;
+
     tbody.appendChild(tr);
+
   });
 }
 
-async function loadBets() {
+async function loadBets(){
+
   const { data, error } = await supabaseClient
     .from("bets")
     .select("*")
-    .order("fecha", { ascending: false })
-    .order("created_at", { ascending: false });
+    .order("fecha", { ascending:false })
+    .order("created_at", { ascending:false });
 
-  if (error) {
+  if(error){
     alert("Error cargando apuestas: " + error.message);
     return;
   }
+
   bets = data || [];
+
   updateSummary();
+
   renderTable();
 }
 
-async function saveBet(e) {
+async function saveBet(e){
+
   e.preventDefault();
 
-  const editingId = document.getElementById("editingId").value;
+  const editingId =
+    document.getElementById("editingId").value;
+
   const payload = {
-    fecha: document.getElementById("fecha").value,
-    tipo: document.getElementById("tipo").value,
-    partido: document.getElementById("partido").value,
-    pick: document.getElementById("pick").value,
-    cuota: document.getElementById("cuota").value ? Number(document.getElementById("cuota").value) : null,
-    stake: Number(document.getElementById("stake").value),
-    resultado: document.getElementById("resultado").value,
-    retorno: document.getElementById("retorno").value ? Number(document.getElementById("retorno").value) : null,
-    notas: document.getElementById("notas").value
+
+    fecha:
+      document.getElementById("fecha").value,
+
+    tipo:
+      document.getElementById("tipo").value,
+
+    partido:
+      document.getElementById("partido").value,
+
+    pick:
+      document.getElementById("pick").value,
+
+    cuota:
+      document.getElementById("cuota").value
+        ? Number(document.getElementById("cuota").value)
+        : null,
+
+    stake:
+      Number(document.getElementById("stake").value),
+
+    resultado:
+      document.getElementById("resultado").value,
+
+    retorno:
+      document.getElementById("retorno").value
+        ? Number(document.getElementById("retorno").value)
+        : null,
+
+    notas:
+      document.getElementById("notas").value
+
   };
 
   let result;
-  if (editingId) {
-    result = await supabaseClient.from("bets").update(payload).eq("id", editingId);
+
+  if(editingId){
+
+    result = await supabaseClient
+      .from("bets")
+      .update(payload)
+      .eq("id", editingId);
+
   } else {
-    result = await supabaseClient.from("bets").insert(payload);
+
+    result = await supabaseClient
+      .from("bets")
+      .insert(payload);
+
   }
 
-  if (result.error) {
+  if(result.error){
     alert("Error guardando: " + result.error.message);
     return;
   }
 
   clearForm();
+
   await loadBets();
 }
 
-function editBet(id) {
+function editBet(id){
+
   const b = bets.find(x => x.id === id);
-  if (!b) return;
-  document.getElementById("editingId").value = b.id;
-  document.getElementById("fecha").value = b.fecha || "";
-  document.getElementById("tipo").value = b.tipo || "simple";
-  document.getElementById("partido").value = b.partido || "";
-  document.getElementById("pick").value = b.pick || "";
-  document.getElementById("cuota").value = b.cuota || "";
-  document.getElementById("stake").value = b.stake || "";
-  document.getElementById("resultado").value = b.resultado || "pendiente";
-  document.getElementById("retorno").value = b.retorno || "";
-  document.getElementById("notas").value = b.notas || "";
-  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if(!b) return;
+
+  document.getElementById("editingId").value =
+    b.id;
+
+  document.getElementById("fecha").value =
+    b.fecha || "";
+
+  document.getElementById("tipo").value =
+    b.tipo || "simple";
+
+  document.getElementById("partido").value =
+    b.partido || "";
+
+  document.getElementById("pick").value =
+    b.pick || "";
+
+  document.getElementById("cuota").value =
+    b.cuota || "";
+
+  document.getElementById("stake").value =
+    b.stake || "";
+
+  document.getElementById("resultado").value =
+    b.resultado || "pendiente";
+
+  document.getElementById("retorno").value =
+    b.retorno || "";
+
+  document.getElementById("notas").value =
+    b.notas || "";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
-async function deleteBet(id) {
-  if (!confirm("¿Borrar esta apuesta?")) return;
-  const { error } = await supabaseClient.from("bets").delete().eq("id", id);
-  if (error) alert("Error borrando: " + error.message);
+async function deleteBet(id){
+
+  if(!confirm("¿Borrar esta apuesta?")){
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("bets")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Error borrando: " + error.message);
+  }
+
   await loadBets();
 }
 
-function clearForm() {
+function clearForm(){
+
   document.getElementById("betForm").reset();
+
   document.getElementById("editingId").value = "";
-  document.getElementById("fecha").valueAsDate = new Date();
+
+  document.getElementById("fecha").valueAsDate =
+    new Date();
 }
 
 document.querySelectorAll("[data-tab]").forEach(btn => {
+
   btn.addEventListener("click", () => {
-    document.querySelectorAll("[data-tab]").forEach(b => b.classList.remove("active"));
+
+    document.querySelectorAll("[data-tab]").forEach(
+      b => b.classList.remove("active")
+    );
+
     btn.classList.add("active");
-    document.getElementById("tipo").value = btn.dataset.tab;
+
+    document.getElementById("tipo").value =
+      btn.dataset.tab;
+
   });
+
 });
 
 document.querySelectorAll(".filter").forEach(btn => {
+
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+
+    document.querySelectorAll(".filter").forEach(
+      b => b.classList.remove("active")
+    );
+
     btn.classList.add("active");
+
     activeFilter = btn.dataset.filter;
+
     renderTable();
+
   });
+
 });
 
-document.getElementById("betForm").addEventListener("submit", saveBet);
-document.getElementById("clearForm").addEventListener("click", clearForm);
+document
+  .getElementById("betForm")
+  .addEventListener("submit", saveBet);
+
+document
+  .getElementById("clearForm")
+  .addEventListener("click", clearForm);
 
 clearForm();
-if (initSupabase()) loadBets();
+
+if(initSupabase()){
+  loadBets();
+}
+
 </script>
+
 </body>
 </html>
